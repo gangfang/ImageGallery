@@ -13,6 +13,7 @@
 		A4FC0BFB2175E2C000191C1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4FC0BF92175E2C000191C1D /* LaunchScreen.storyboard */; };
 		A4FC0C042175E34600191C1D /* ImageGalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FC0C032175E34600191C1D /* ImageGalleryCollectionViewController.swift */; };
 		A4FC0C062175E3D400191C1D /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FC0C052175E3D400191C1D /* ImageCollectionViewCell.swift */; };
+		A4FC0C082176DBC500191C1D /* notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = A4FC0C072176DBC500191C1D /* notes.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		A4FC0BFC2175E2C000191C1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4FC0C032175E34600191C1D /* ImageGalleryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryCollectionViewController.swift; sourceTree = "<group>"; };
 		A4FC0C052175E3D400191C1D /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		A4FC0C072176DBC500191C1D /* notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		A4FC0BEF2175E2BE00191C1D /* ImageGallery */ = {
 			isa = PBXGroup;
 			children = (
+				A4FC0C072176DBC500191C1D /* notes.txt */,
 				A4FC0BF42175E2BF00191C1D /* Main.storyboard */,
 				A4FC0C032175E34600191C1D /* ImageGalleryCollectionViewController.swift */,
 				A4FC0C052175E3D400191C1D /* ImageCollectionViewCell.swift */,
@@ -133,6 +136,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4FC0C082176DBC500191C1D /* notes.txt in Resources */,
 				A4FC0BFB2175E2C000191C1D /* LaunchScreen.storyboard in Resources */,
 				A4FC0BF82175E2C000191C1D /* Assets.xcassets in Resources */,
 				A4FC0BF62175E2BF00191C1D /* Main.storyboard in Resources */,
