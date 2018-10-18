@@ -10,8 +10,7 @@ import UIKit
 
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
 
-    var images = [UIImage(named: "model3"), UIImage(named: "elon")]
-
+    var images = [UIImage]()
     
     
     override func viewDidLoad() {
@@ -32,7 +31,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath)
         
-        if let imageCell = cell as? ImageCollectionViewCell, images[indexPath.item] != nil {
+        if let imageCell = cell as? ImageCollectionViewCell {
             imageCell.imageView.image = images[indexPath.item]
         }
         return cell
