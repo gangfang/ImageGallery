@@ -31,7 +31,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath)
-    
+        
         if let imageCell = cell as? ImageCollectionViewCell, images[indexPath.item] != nil {
             imageCell.imageView.image = images[indexPath.item]
         }

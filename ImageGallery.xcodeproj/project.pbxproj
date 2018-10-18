@@ -14,6 +14,7 @@
 		A4FC0C042175E34600191C1D /* ImageGalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FC0C032175E34600191C1D /* ImageGalleryCollectionViewController.swift */; };
 		A4FC0C062175E3D400191C1D /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FC0C052175E3D400191C1D /* ImageCollectionViewCell.swift */; };
 		A4FC0C082176DBC500191C1D /* notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = A4FC0C072176DBC500191C1D /* notes.txt */; };
+		A4FC0C0A21786E0300191C1D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FC0C0921786E0300191C1D /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		A4FC0C032175E34600191C1D /* ImageGalleryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryCollectionViewController.swift; sourceTree = "<group>"; };
 		A4FC0C052175E3D400191C1D /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		A4FC0C072176DBC500191C1D /* notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
+		A4FC0C0921786E0300191C1D /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		A4FC0C022175E2DD00191C1D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A4FC0C0921786E0300191C1D /* Utilities.swift */,
 				A4FC0BF02175E2BE00191C1D /* AppDelegate.swift */,
 				A4FC0BF72175E2C000191C1D /* Assets.xcassets */,
 				A4FC0BF92175E2C000191C1D /* LaunchScreen.storyboard */,
@@ -152,6 +155,7 @@
 			files = (
 				A4FC0C062175E3D400191C1D /* ImageCollectionViewCell.swift in Sources */,
 				A4FC0BF12175E2BE00191C1D /* AppDelegate.swift in Sources */,
+				A4FC0C0A21786E0300191C1D /* Utilities.swift in Sources */,
 				A4FC0C042175E34600191C1D /* ImageGalleryCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
