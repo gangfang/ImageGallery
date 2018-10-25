@@ -95,7 +95,6 @@
                                         </activityIndicatorView>
                                     </subviews>
                                 </view>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="FMB-N2-6QH" firstAttribute="centerX" secondItem="8Ir-qs-Nnw" secondAttribute="centerX" id="HAZ-Io-eKh"/>
                                     <constraint firstItem="FMB-N2-6QH" firstAttribute="centerY" secondItem="8Ir-qs-Nnw" secondAttribute="centerY" id="y0t-8n-k5r"/>

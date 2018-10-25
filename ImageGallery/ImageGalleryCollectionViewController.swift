@@ -28,7 +28,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageARAndURLs.count
     }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath)
         if let imageCell = cell as? ImageCollectionViewCell {
@@ -36,8 +35,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         }
         return cell
     }
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width: CGFloat = 250
         let height: CGFloat = (imageARAndURLs[indexPath.item]["aspectRatio"] as! CGFloat) * width
@@ -105,7 +102,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
             destinationIndexPath = IndexPath(item: collectionView.visibleCells.count, section: 0)
         }
         
-        // goal: implement rearrangement
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
                 collectionView.performBatchUpdates({
@@ -116,15 +112,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                 })
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
             } else {
-                let dropPlaceholder = UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "dropPlaceholderCell")
-                dropPlaceholder.cellUpdateHandler = { collectionViewCell in
-                    if let placeholderCell = collectionViewCell as? DropPlaceholderCollectionViewCell {
-                        placeholderCell.spinner.startAnimating()
-                    }
-                }
-                let placeHolderContext = coordinator.drop(item.dragItem, to: dropPlaceholder)
-                
-                
                 var imageARAndURL = [String: Any]()
                 let group = DispatchGroup()
                 group.enter()
@@ -142,16 +129,25 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                         group.leave()
                     }
                 }
-
-                group.notify(queue: .global(qos: .userInitiated)) {
+                
+                group.notify(queue: .main) {
+                    let dropPlaceholder = UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "dropPlaceholderCell")
+                    dropPlaceholder.cellUpdateHandler = { collectionViewCell in
+                        if let placeholderCell = collectionViewCell as? DropPlaceholderCollectionViewCell {
+                            placeholderCell.spinner.startAnimating()
+                        }
+                    }
+                    let placeHolderContext = coordinator.drop(item.dragItem, to: dropPlaceholder)
+                    
                     if imageARAndURL["aspectRatio"] != nil && imageARAndURL["imageURL"] != nil {
                         let task = URLSession.shared.dataTask(with: imageARAndURL["imageURL"] as! URL) { data, response, error in
                             // not handling response and error here
                             DispatchQueue.main.async {
-                                if let imageData = data {
-                                    imageARAndURL["image"] = UIImage(data: imageData) ?? UIImage(named: "imageNotFound")
+                                if let imageData = data, let image = UIImage(data: imageData) {
+                                    imageARAndURL["image"] = image
                                 } else {
                                     imageARAndURL["image"] = UIImage(named: "imageNotFound")
+                                    imageARAndURL["aspectRatio"] = CGFloat(1)
                                 }
                                 placeHolderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
                                     self.imageARAndURLs.insert(imageARAndURL, at: insertionIndexPath.item)
