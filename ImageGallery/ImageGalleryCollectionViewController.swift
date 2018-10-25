@@ -71,7 +71,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
             return session.canLoadObjects(ofClass: UIImage.self) && session.canLoadObjects(ofClass: URL.self)
         }
     }
-    // go back and check .move and .copy after implementing the move drop
     func collectionView(_ collectionView: UICollectionView,
                         dropSessionDidUpdate session: UIDropSession,
                         withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
@@ -92,77 +91,97 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        
-        // put placeholder at the end of cell queue when there're placeholders in the collection view
-        // to avoid potential problems caused by placeholder API
-        let destinationIndexPath: IndexPath
-        if let destinationIndexPathTmp = coordinator.destinationIndexPath, !collectionView.hasUncommittedUpdates {
-            destinationIndexPath = destinationIndexPathTmp
-        } else {
-            destinationIndexPath = IndexPath(item: collectionView.visibleCells.count, section: 0)
-        }
-        
+       let destinationIndexPath = configureDestinationIndexPath(collectionView, coordinator)
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
-                collectionView.performBatchUpdates({
-                    let imageARAndURL = imageARAndURLs.remove(at: sourceIndexPath.item)
-                    imageARAndURLs.insert(imageARAndURL, at: min(destinationIndexPath.item, imageARAndURLs.count))
-                    collectionView.deleteItems(at: [sourceIndexPath])
-                    collectionView.insertItems(at: [destinationIndexPath])
-                })
-                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                move(item, in: collectionView, from: sourceIndexPath, to: destinationIndexPath, with: coordinator)
             } else {
-                var imageARAndURL = [String: Any]()
-                let group = DispatchGroup()
-                group.enter()
-                _ = item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error) in
-                    if let image = provider as? UIImage {
-                        let aspectRatio = image.size.height / image.size.width
-                        imageARAndURL["aspectRatio"] = aspectRatio
-                        group.leave()
-                    }
-                }
-                group.enter()
-                _ = item.dragItem.itemProvider.loadObject(ofClass: URL.self) { (provider, error) in
-                    if let url = provider {
-                        imageARAndURL["imageURL"] = url.imageURL
-                        group.leave()
-                    }
-                }
-                
-                group.notify(queue: .main) {
-                    let dropPlaceholder = UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "dropPlaceholderCell")
-                    dropPlaceholder.cellUpdateHandler = { collectionViewCell in
-                        if let placeholderCell = collectionViewCell as? DropPlaceholderCollectionViewCell {
-                            placeholderCell.spinner.startAnimating()
-                        }
-                    }
-                    let placeHolderContext = coordinator.drop(item.dragItem, to: dropPlaceholder)
-                    
-                    if imageARAndURL["aspectRatio"] != nil && imageARAndURL["imageURL"] != nil {
-                        let task = URLSession.shared.dataTask(with: imageARAndURL["imageURL"] as! URL) { data, response, error in
-                            // not handling response and error here
-                            DispatchQueue.main.async {
-                                if let imageData = data, let image = UIImage(data: imageData) {
-                                    imageARAndURL["image"] = image
-                                } else {
-                                    imageARAndURL["image"] = UIImage(named: "imageNotFound")
-                                    imageARAndURL["aspectRatio"] = CGFloat(1)
-                                }
-                                placeHolderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
-                                    self.imageARAndURLs.insert(imageARAndURL, at: insertionIndexPath.item)
-                                })
-                            }
-                        }
-                        task.resume()
-                    } else {
-                        placeHolderContext.deletePlaceholder()
-                    }
-                }
+                copy(item, into: collectionView, dropAt: destinationIndexPath, with: coordinator)
             }
         }
     }
 
+    // put placeholder at the end of cell queue when there're placeholders in the collection view
+    // to avoid potential problems caused by placeholder API
+    private func configureDestinationIndexPath(_ collectionView: UICollectionView, _ coordinator: UICollectionViewDropCoordinator) -> IndexPath {
+        if let destinationIndexPathTmp = coordinator.destinationIndexPath, !collectionView.hasUncommittedUpdates {
+            return destinationIndexPathTmp
+        } else {
+            return IndexPath(item: collectionView.visibleCells.count, section: 0)
+        }
+    }
+    
+    private func move(_ item: UICollectionViewDropItem,
+                      in collectionView: UICollectionView,
+                      from sourceIndexPath: IndexPath,
+                      to destinationIndexPath: IndexPath,
+                      with coordinator: UICollectionViewDropCoordinator)
+    {
+        collectionView.performBatchUpdates({
+        let imageARAndURL = imageARAndURLs.remove(at: sourceIndexPath.item)
+        imageARAndURLs.insert(imageARAndURL, at: min(destinationIndexPath.item, imageARAndURLs.count))
+        collectionView.deleteItems(at: [sourceIndexPath])
+        collectionView.insertItems(at: [destinationIndexPath])
+        })
+        coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+    }
+    
+    private func copy(_ item: UICollectionViewDropItem,
+                      into collectionView: UICollectionView,
+                      dropAt destinationIndexPath: IndexPath,
+                      with coordinator: UICollectionViewDropCoordinator)
+    {
+        var imageARAndURL = [String: Any]()
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        _ = item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error) in
+            if let image = provider as? UIImage {
+                let aspectRatio = image.size.height / image.size.width
+                imageARAndURL["aspectRatio"] = aspectRatio
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.enter()
+        _ = item.dragItem.itemProvider.loadObject(ofClass: URL.self) { (provider, error) in
+            if let url = provider {
+                imageARAndURL["imageURL"] = url.imageURL
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            let dropPlaceholder = UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "dropPlaceholderCell")
+            dropPlaceholder.cellUpdateHandler = { collectionViewCell in
+                if let placeholderCell = collectionViewCell as? DropPlaceholderCollectionViewCell {
+                    placeholderCell.spinner.startAnimating()
+                }
+            }
+            let placeHolderContext = coordinator.drop(item.dragItem, to: dropPlaceholder)
+            
+            if imageARAndURL["aspectRatio"] != nil && imageARAndURL["imageURL"] != nil {
+                let task = URLSession.shared.dataTask(with: imageARAndURL["imageURL"] as! URL) { data, response, error in
+                    // not handling response and error 
+                    DispatchQueue.main.async {
+                        if let imageData = data, let image = UIImage(data: imageData) {
+                            imageARAndURL["image"] = image
+                        } else {
+                            imageARAndURL["image"] = UIImage(named: "imageNotFound")
+                            imageARAndURL["aspectRatio"] = CGFloat(1)
+                        }
+                        placeHolderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
+                            self.imageARAndURLs.insert(imageARAndURL, at: insertionIndexPath.item)
+                        })
+                    }
+                }
+                task.resume()
+            } else {
+                placeHolderContext.deletePlaceholder()
+            }
+        }
+    }
+    
     
     
     /*
