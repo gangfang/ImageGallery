@@ -58,7 +58,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         if let draggedImage = (collectionView?.cellForItem(at: indexPath) as? ImageCollectionViewCell)?.imageView.image {
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: draggedImage))
-            dragItem.localObject = draggedImage // problem is here: localObject is an UIImage
             return [dragItem]
         } else {
             return []
@@ -109,15 +108,13 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         // goal: implement rearrangement
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
-                if let draggedImage = item.dragItem.localObject as? UIImage {
-                    collectionView.performBatchUpdates({
-                        let imageARAndURL = imageARAndURLs.remove(at: sourceIndexPath.item)
-                        imageARAndURLs.insert(imageARAndURL, at: min(destinationIndexPath.item, imageARAndURLs.count))
-                        collectionView.deleteItems(at: [sourceIndexPath])
-                        collectionView.insertItems(at: [destinationIndexPath])
-                    })
-                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                }
+                collectionView.performBatchUpdates({
+                    let imageARAndURL = imageARAndURLs.remove(at: sourceIndexPath.item)
+                    imageARAndURLs.insert(imageARAndURL, at: min(destinationIndexPath.item, imageARAndURLs.count))
+                    collectionView.deleteItems(at: [sourceIndexPath])
+                    collectionView.insertItems(at: [destinationIndexPath])
+                })
+                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
             } else {
                 let dropPlaceholder = UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "dropPlaceholderCell")
                 dropPlaceholder.cellUpdateHandler = { collectionViewCell in
