@@ -134,23 +134,32 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="ozI-Rv-bcU"/>
                     <connections>
-                        <segue destination="Xfq-b9-hkp" kind="showDetail" id="nFI-Pf-uHZ"/>
+                        <segue destination="Xfq-b9-hkp" kind="showDetail" identifier="showBigImage" id="nFI-Pf-uHZ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IrE-oH-Xaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-476.13469985358711" y="406.640625"/>
         </scene>
-        <!--View Controller-->
+        <!--Single Image View Controller-->
         <scene sceneID="daC-Tx-pOP">
             <objects>
-                <viewController id="Xfq-b9-hkp" sceneMemberID="viewController">
+                <viewController id="Xfq-b9-hkp" customClass="SingleImageViewController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GII-gB-s2l">
                         <rect key="frame" x="0.0" y="0.0" width="990.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vN0-eF-cID">
+                                <rect key="frame" x="375" y="448" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="LlY-Nb-P9X"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="vN0-eF-cID" id="BK2-VA-kME"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zg1-7U-RIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

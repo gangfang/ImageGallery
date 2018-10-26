@@ -53,7 +53,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController,
     
     
     // MARK: UICollectionViewDataSource
-    
+    // goal: to make segue works, transfer image to single image view
+    // need to know which cell is tapped
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageARAndURLs.count
     }
@@ -61,8 +62,17 @@ class ImageGalleryCollectionViewController: UICollectionViewController,
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath)
         if let imageCell = cell as? ImageCollectionViewCell {
             imageCell.imageView.image = (imageARAndURLs[indexPath.item]["image"] as! UIImage)
+            addTapGestureFor(imageCell)
         }
         return cell
+    }
+    private func addTapGestureFor(_ imageCell: ImageCollectionViewCell) {
+        let tap = UITapGestureRecognizer(target: self,
+                                         action: #selector(showBigImage(byHandlingTapGestureRecognizedBy:)))
+        imageCell.addGestureRecognizer(tap)
+    }
+    @objc private func showBigImage(byHandlingTapGestureRecognizedBy recognizer: UITapGestureRecognizer) {
+        performSegue(withIdentifier: "showBigImage", sender: recognizer.view)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let imageHeight: CGFloat = (imageARAndURLs[indexPath.item]["aspectRatio"] as! CGFloat) * imageWidth
@@ -211,14 +221,13 @@ class ImageGalleryCollectionViewController: UICollectionViewController,
     }
     
     
-    
-    /*
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using [segue destinationViewController].
-     // Pass the selected object to the new view controller.
+        if let singleImageViewController = segue.destination as? SingleImageViewController,
+           let imageCell = sender as? ImageCollectionViewCell {
+            singleImageViewController.imageHolderForSegue = imageCell.imageView.image
+        }
+     
      }
-     */
 }
