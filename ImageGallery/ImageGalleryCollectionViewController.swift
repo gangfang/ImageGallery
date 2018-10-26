@@ -8,17 +8,45 @@
 
 import UIKit
 
-class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDragDelegate, UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout {
-
+class ImageGalleryCollectionViewController: UICollectionViewController,
+                                            UICollectionViewDragDelegate,
+                                            UICollectionViewDropDelegate,
+                                            UICollectionViewDelegateFlowLayout
+{
     var images = [UIImage]()
     var imageARAndURLs = [[String: Any]]()   // AR is short for Aspect Ratio
-    
+    var baseImageWidth: CGFloat = 250
+    var imageWidth: CGFloat = 250
+    var flowLayout: UICollectionViewFlowLayout? {
+        return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setDelegates()
+        setGestureRecognizer()
+    }
+    private func setDelegates() {
         collectionView?.dragDelegate = self
         collectionView?.dropDelegate = self
+    }
+    private func setGestureRecognizer() {
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch(recognizer:)))
+        collectionView?.addGestureRecognizer(pinchGestureRecognizer)
+    }
+    
+    
+    @objc func pinch(recognizer: UIPinchGestureRecognizer) {
+        switch recognizer.state {
+        case .changed:
+            imageWidth = recognizer.scale * baseImageWidth
+            flowLayout?.invalidateLayout()
+        case .ended:
+            baseImageWidth = imageWidth
+        default:
+            break
+        }
     }
     
     
@@ -36,9 +64,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = 250
-        let height: CGFloat = (imageARAndURLs[indexPath.item]["aspectRatio"] as! CGFloat) * width
-        return CGSize(width: width, height: height)
+        let imageHeight: CGFloat = (imageARAndURLs[indexPath.item]["aspectRatio"] as! CGFloat) * imageWidth
+        return CGSize(width: imageWidth, height: imageHeight)
     }
     
     
