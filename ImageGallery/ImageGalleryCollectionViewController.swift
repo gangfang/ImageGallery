@@ -32,12 +32,13 @@ class ImageGalleryCollectionViewController: UICollectionViewController,
         collectionView?.dropDelegate = self
     }
     private func setGestureRecognizer() {
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch(recognizer:)))
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self,
+                                                              action: #selector(scaleWidthOfCells(byHandlingPinchGestureRecognizedBy:)))
         collectionView?.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     
-    @objc func pinch(recognizer: UIPinchGestureRecognizer) {
+    @objc func scaleWidthOfCells(byHandlingPinchGestureRecognizedBy recognizer: UIPinchGestureRecognizer) {
         switch recognizer.state {
         case .changed:
             imageWidth = recognizer.scale * baseImageWidth
