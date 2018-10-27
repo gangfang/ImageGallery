@@ -13,7 +13,7 @@
         <!--Root View Controller-->
         <scene sceneID="LJ7-hH-TcP">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="a8o-oz-M9S" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="a8o-oz-M9S" customClass="GalleriesTableViewController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gAm-Be-yCl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
