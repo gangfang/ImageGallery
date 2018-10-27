@@ -104,7 +104,7 @@
                                     <outlet property="spinner" destination="FMB-N2-6QH" id="w9B-sj-t3D"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="imageCell" id="whN-El-s0G" customClass="ImageCollectionViewCell" customModule="ImageGallery" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="whN-El-s0G" customClass="ImageCollectionViewCell" customModule="ImageGallery" customModuleProvider="target">
                                 <rect key="frame" x="370.5" y="0.0" width="250" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -112,7 +112,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PcR-Zs-6ft">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="250"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                                         </imageView>
                                     </subviews>
                                 </view>
@@ -134,7 +134,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="ozI-Rv-bcU"/>
                     <connections>
-                        <segue destination="Xfq-b9-hkp" kind="showDetail" identifier="showBigImage" id="nFI-Pf-uHZ"/>
+                        <segue destination="Xfq-b9-hkp" kind="show" identifier="showBigImage" id="nFI-Pf-uHZ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IrE-oH-Xaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -150,7 +150,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vN0-eF-cID">
-                                <rect key="frame" x="375" y="448" width="240" height="128"/>
+                                <rect key="frame" x="232" y="320" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -168,6 +168,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Cgc-hz-4Tb">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KHF-Dd-sp1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="z8l-lE-XcX" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HXl-zO-nlb">
@@ -179,7 +180,6 @@
                         <segue destination="yDW-cr-LjJ" kind="relationship" relationship="rootViewController" id="xp1-QL-d0i"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KHF-Dd-sp1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1169.2532942898974" y="406.640625"/>
         </scene>

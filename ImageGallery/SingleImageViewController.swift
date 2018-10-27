@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// make scroll view
 class SingleImageViewController: UIViewController {
 
     var imageHolderForSegue: UIImage?

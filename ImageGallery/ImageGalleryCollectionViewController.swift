@@ -53,8 +53,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,
     
     
     // MARK: UICollectionViewDataSource
-    // goal: to make segue works, transfer image to single image view
-    // need to know which cell is tapped
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageARAndURLs.count
     }
