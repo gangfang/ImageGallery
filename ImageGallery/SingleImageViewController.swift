@@ -7,8 +7,8 @@
 //
 
 import UIKit
-// make scroll view
-class SingleImageViewController: UIViewController {
+
+class SingleImageViewController: UIViewController, UIScrollViewDelegate {
 
     var imageHolderForSegue: UIImage?
     @IBOutlet weak var imageView: UIImageView! {
@@ -16,11 +16,16 @@ class SingleImageViewController: UIViewController {
             imageView.image = imageHolderForSegue
         }
     }
+    @IBOutlet weak var scrollView: UIScrollView!
     
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        scrollView.delegate = self
     }
 }
