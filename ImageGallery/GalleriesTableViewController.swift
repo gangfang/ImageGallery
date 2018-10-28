@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: swipe to delete in main section
+// goal: 
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -42,23 +42,11 @@ class GalleriesTableViewController: UITableViewController {
         return cell
     }
     
-    private func getGalleryTitle(from number: Int) -> String {
-        switch number {
-        case 0:
-            return GalleriesTableVarNames.mainSection
-        case 1:
-            return GalleriesTableVarNames.recentlyDeletedSection
-        default:
-            assertionFailure("number returned from indexPath.section is unexpected in getGalleryTitle(from)")
-            return ""
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
+        case getGalleryIdx(from: GalleriesTableVarNames.mainSection):
             return nil
-        case 1:
+        case getGalleryIdx(from: GalleriesTableVarNames.recentlyDeletedSection):
             return "Recently Deleted"
         default:
             assertionFailure("number returned from indexPath.section is unexpected in tableView(_:titleForHeaderInSection)")
@@ -81,8 +69,8 @@ class GalleriesTableViewController: UITableViewController {
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 if getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.mainSection {
                     tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .fade)
-                    let tempDeletedGallery = galleries[GalleriesTableVarNames.mainSection]!.remove(at: indexPath.row)
-                    galleries[GalleriesTableVarNames.recentlyDeletedSection]!.insert(tempDeletedGallery, at: 0)
+                    let galleryToDelete = galleries[GalleriesTableVarNames.mainSection]!.remove(at: indexPath.row)
+                    galleries[GalleriesTableVarNames.recentlyDeletedSection]!.insert(galleryToDelete, at: 0)
                 } else if getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.recentlyDeletedSection {
                     galleries[GalleriesTableVarNames.recentlyDeletedSection]!.remove(at: indexPath.row)
                 }
@@ -91,8 +79,25 @@ class GalleriesTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-
-
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.section == getGalleryIdx(from: GalleriesTableVarNames.recentlyDeletedSection) {
+            let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") { (_, _, _) in
+                tableView.performBatchUpdates({
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+                    let galleryToUndelete = self.galleries[GalleriesTableVarNames.recentlyDeletedSection]!.remove(at: indexPath.row)
+                    self.galleries[GalleriesTableVarNames.mainSection]!.insert(galleryToUndelete, at: 0)
+                    
+                    // to avoid the bug which causes "Undelete" button to stay on screen after the Undeletion is completed
+                    tableView.reloadData()
+                })
+            }
+            return UISwipeActionsConfiguration(actions: [undeleteAction])
+        }
+        return nil
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -118,6 +123,30 @@ class GalleriesTableViewController: UITableViewController {
     }
     */
 
+    
+    
+    private func getGalleryTitle(from idx: Int) -> String {
+        switch idx {
+        case 0:
+            return GalleriesTableVarNames.mainSection
+        case 1:
+            return GalleriesTableVarNames.recentlyDeletedSection
+        default:
+            assertionFailure("number returned from indexPath.section is unexpected in getGalleryTitle(from)")
+            return ""
+        }
+    }
+    private func getGalleryIdx(from title: String) -> Int {
+        switch title {
+        case GalleriesTableVarNames.mainSection:
+            return 0
+        case GalleriesTableVarNames.recentlyDeletedSection:
+            return 1
+        default:
+            assertionFailure("number returned from indexPath.section is unexpected in getGalleryIdx(from)")
+            return 0
+        }
+    }
 }
 
 
