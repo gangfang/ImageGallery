@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal:
+// goal: give a title bar for the second section
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -49,8 +49,20 @@ class GalleriesTableViewController: UITableViewController {
         case 1:
             return GalleriesTableVarNames.recentlyDeletedSection
         default:
-            assertionFailure("number returned from indexPath.section is unexpected.")
+            assertionFailure("number returned from indexPath.section is unexpected in getGalleryTitle(from)")
             return ""
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return nil
+        case 1:
+            return "Recently Deleted"
+        default:
+            assertionFailure("number returned from indexPath.section is unexpected in tableView(_:titleForHeaderInSection)")
+            return nil
         }
     }
 
