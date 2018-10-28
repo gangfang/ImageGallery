@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: give a title bar for the second section
+// goal: swipe to delete in main section
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -74,17 +74,24 @@ class GalleriesTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support editing the table view.
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.performBatchUpdates({
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                if getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.mainSection {
+                    tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .fade)
+                    let tempDeletedGallery = galleries[GalleriesTableVarNames.mainSection]!.remove(at: indexPath.row)
+                    galleries[GalleriesTableVarNames.recentlyDeletedSection]!.insert(tempDeletedGallery, at: 0)
+                } else if getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.recentlyDeletedSection {
+                    galleries[GalleriesTableVarNames.recentlyDeletedSection]!.remove(at: indexPath.row)
+                }
+            })
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
+
 
     /*
     // Override to support rearranging the table view.
