@@ -7,14 +7,15 @@
 //
 
 import UIKit
-// goal: can add cells
+// goal:
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
-        galleries.append("Untitled Gallery")
+        galleries[GalleriesTableVarNames.mainSection]!.append(GalleriesTableVarNames.untitledGallery)
         tableView.reloadData()
     }
-    var galleries = [String]()
+    var galleries: [String: [String]] = [GalleriesTableVarNames.mainSection: [GalleriesTableVarNames.untitledGallery],
+                                         GalleriesTableVarNames.recentlyDeletedSection: []]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,17 +29,29 @@ class GalleriesTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return galleries.count
+        return galleries[getGalleryTitle(from: section)]!.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "galleryRow", for: indexPath)
-        cell.textLabel?.text = galleries[indexPath.row]
+        cell.textLabel?.text = galleries[getGalleryTitle(from: indexPath.section)]![indexPath.row]
         return cell
+    }
+    
+    private func getGalleryTitle(from number: Int) -> String {
+        switch number {
+        case 0:
+            return GalleriesTableVarNames.mainSection
+        case 1:
+            return GalleriesTableVarNames.recentlyDeletedSection
+        default:
+            assertionFailure("number returned from indexPath.section is unexpected.")
+            return ""
+        }
     }
 
     /*
@@ -86,4 +99,11 @@ class GalleriesTableViewController: UITableViewController {
     }
     */
 
+}
+
+
+struct GalleriesTableVarNames {
+    static let mainSection = "main"
+    static let recentlyDeletedSection = "recentlyDeleted"
+    static let untitledGallery = "Untitled Gallery"
 }
