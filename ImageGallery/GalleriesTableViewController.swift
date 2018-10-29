@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: 
+// goal: tap a row to open the corresponding gallery with segue
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -62,7 +62,7 @@ class GalleriesTableViewController: UITableViewController {
     }
     */
 
-
+    /// func implementing swipe to delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.performBatchUpdates({
@@ -80,6 +80,7 @@ class GalleriesTableViewController: UITableViewController {
         }
     }
     
+    /// func implementing swipe to undelete
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == getGalleryIdx(from: GalleriesTableVarNames.recentlyDeletedSection) {
             let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") { (_, _, _) in
@@ -98,6 +99,13 @@ class GalleriesTableViewController: UITableViewController {
         return nil
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRow = tableView.cellForRow(at: indexPath)
+        if getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.mainSection {
+            performSegue(withIdentifier: "showGallery", sender: selectedRow)
+        }
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -112,16 +120,17 @@ class GalleriesTableViewController: UITableViewController {
         return true
     }
     */
+    
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if let selectedRow = sender as? UITableViewCell {
+            print(selectedRow.textLabel?.text)
+        }
     }
-    */
 
     
     

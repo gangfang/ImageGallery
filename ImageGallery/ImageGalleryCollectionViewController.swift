@@ -8,11 +8,8 @@
 
 import UIKit
 
-class ImageGalleryCollectionViewController: UICollectionViewController,
-                                            UICollectionViewDragDelegate,
-                                            UICollectionViewDropDelegate,
-                                            UICollectionViewDelegateFlowLayout
-{
+class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDragDelegate,
+                                            UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout {
     var images = [UIImage]()
     var imageARAndURLs = [[String: Any]]()   // AR is short for Aspect Ratio
     var baseImageWidth: CGFloat = 250

@@ -49,6 +49,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="z8l-lE-XcX" kind="showDetail" identifier="showGallery" id="Ipu-e9-Jpv"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lzi-KX-7Gr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -165,7 +168,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="8tq-dw-PyF">
-                                <rect key="frame" x="0.0" y="64" width="991" height="960"/>
+                                <rect key="frame" x="0.0" y="64" width="990.5" height="960"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="991" placeholderIntrinsicHeight="960" translatesAutoresizingMaskIntoConstraints="NO" id="vN0-eF-cID">
                                         <rect key="frame" x="0.0" y="0.0" width="991" height="960"/>
@@ -216,4 +219,7 @@
             <point key="canvasLocation" x="-1169.2532942898974" y="406.640625"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ipu-e9-Jpv"/>
+    </inferredMetricsTieBreakers>
 </document>
