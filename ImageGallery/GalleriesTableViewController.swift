@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: tap a row to open the corresponding gallery with segue
+// goal: preferredDisplayMode
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -33,6 +33,13 @@ class GalleriesTableViewController: UITableViewController {
         selectFirstRowOnLoad()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if let splitViewController = splitViewController, splitViewController.preferredDisplayMode != .primaryOverlay {
+            splitViewController.preferredDisplayMode = .primaryOverlay
+        }
     }
     
     private func selectFirstRowOnLoad() {
