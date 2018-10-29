@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: resign first responder and save name
+
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -70,6 +70,11 @@ class GalleriesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "galleryRow", for: indexPath)
         if let galleryRowCell = cell as? GalleriesTableViewCell {
             galleryRowCell.textField.text = galleries[getGalleryTitle(from: indexPath.section)]![indexPath.row].name
+            galleryRowCell.resignationHandler = { [weak self, unowned galleryRowCell] in
+                if let text = galleryRowCell.textField.text {
+                    self?.galleries[self!.getGalleryTitle(from: indexPath.section)]![indexPath.row].name = text
+                }
+            }
         }
         return cell
     }

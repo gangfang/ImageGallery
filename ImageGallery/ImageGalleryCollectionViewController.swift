@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: 
+
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDragDelegate,
                                             UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout {
     var images = [UIImage]()
@@ -42,6 +42,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         
         setDelegates()
         setGestureRecognizer()
+        setNavgationItemTitle()
     }
     private func setDelegates() {
         collectionView?.dragDelegate = self
@@ -62,6 +63,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         default:
             break
         }
+    }
+    private func setNavgationItemTitle() {
+        navigationItem.title = imageGallery.name
     }
 
     

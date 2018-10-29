@@ -16,21 +16,17 @@ class GalleriesTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
+    var resignationHandler: (() -> Void)?
+    
+    
+    // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        resignationHandler?()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
