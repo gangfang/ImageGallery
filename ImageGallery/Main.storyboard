@@ -14,7 +14,7 @@
         <scene sceneID="LJ7-hH-TcP">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="a8o-oz-M9S" customClass="GalleriesTableViewController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gAm-Be-yCl">
+                    <tableView key="view" clipsSubviews="YES" alpha="0.94999999999999996" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gAm-Be-yCl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -84,7 +84,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NJi-KA-lMn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1866" y="16"/>
+            <point key="canvasLocation" x="-1908" y="22"/>
         </scene>
         <!--Image Gallery Collection View Controller-->
         <scene sceneID="cZA-Qv-Ves">
@@ -157,7 +157,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IrE-oH-Xaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-476.13469985358711" y="406.640625"/>
+            <point key="canvasLocation" x="-472" y="461"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="daC-Tx-pOP">
@@ -198,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zg1-7U-RIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="244.65592972181551" y="406.640625"/>
+            <point key="canvasLocation" x="250" y="461"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cgc-hz-4Tb">
@@ -216,10 +216,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KHF-Dd-sp1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1169.2532942898974" y="406.640625"/>
+            <point key="canvasLocation" x="-1169" y="461"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Ipu-e9-Jpv"/>
+        <segue reference="Aww-jt-yKM"/>
     </inferredMetricsTieBreakers>
 </document>

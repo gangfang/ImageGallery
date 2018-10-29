@@ -19,12 +19,29 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     }
     
     
+    // MARK: life cycle methods
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        addNavgationBarLeftButton()
+    }
+    /// the galleries table view will overlay when this leftBarButtonItem is tapped
+    private func addNavgationBarLeftButton() {
+        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
+            if navigationItem.leftBarButtonItem != splitViewController?.displayModeButtonItem {
+                navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+            }
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegates()
         setGestureRecognizer()
-        addNavgationBarLeftButton()
     }
     private func setDelegates() {
         collectionView?.dragDelegate = self
@@ -35,13 +52,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                                                               action: #selector(scaleWidthOfCells(byHandlingPinchGestureRecognizedBy:)))
         collectionView?.addGestureRecognizer(pinchGestureRecognizer)
     }
-    /// the galleries table view will overlay when this leftBarButtonItem is tapped
-    private func addNavgationBarLeftButton() {
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-    }
-    
-    
-    @objc func scaleWidthOfCells(byHandlingPinchGestureRecognizedBy recognizer: UIPinchGestureRecognizer) {
+    @objc private func scaleWidthOfCells(byHandlingPinchGestureRecognizedBy recognizer: UIPinchGestureRecognizer) {
         switch recognizer.state {
         case .changed:
             imageWidth = recognizer.scale * baseImageWidth
