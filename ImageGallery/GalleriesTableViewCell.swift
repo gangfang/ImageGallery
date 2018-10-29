@@ -10,8 +10,17 @@ import UIKit
 
 class GalleriesTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    @IBOutlet weak var textField: UITextField!
-
+    @IBOutlet weak var textField: UITextField! {
+        didSet {
+            textField.delegate = self
+        }
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
