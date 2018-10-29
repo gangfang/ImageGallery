@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: 
+
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// goal: 
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDragDelegate,
                                             UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout {
     var images = [UIImage]()
@@ -17,6 +17,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     var flowLayout: UICollectionViewFlowLayout? {
         return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
             break
         }
     }
+
+    
     
     
     
