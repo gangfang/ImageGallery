@@ -78,6 +78,7 @@ class GalleriesTableViewController: UITableViewController, UISplitViewController
         let cell = tableView.dequeueReusableCell(withIdentifier: "galleryRow", for: indexPath)
         if let galleryRowCell = cell as? GalleriesTableViewCell {
             galleryRowCell.textField.text = galleries[getGalleryTitle(from: indexPath.section)]![indexPath.row].name
+            galleryRowCell.textField.isEnabled = getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.mainSection
             galleryRowCell.resignationHandler = { [weak self, unowned galleryRowCell] in
                 if let text = galleryRowCell.textField.text {
                     self?.galleries[self!.getGalleryTitle(from: indexPath.section)]![indexPath.row].name = text
