@@ -23,6 +23,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         
         setDelegates()
         setGestureRecognizer()
+        addNavgationBarLeftButton()
     }
     private func setDelegates() {
         collectionView?.dragDelegate = self
@@ -32,6 +33,10 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self,
                                                               action: #selector(scaleWidthOfCells(byHandlingPinchGestureRecognizedBy:)))
         collectionView?.addGestureRecognizer(pinchGestureRecognizer)
+    }
+    /// the galleries table view will overlay when this leftBarButtonItem is tapped
+    private func addNavgationBarLeftButton() {
+        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
     }
     
     

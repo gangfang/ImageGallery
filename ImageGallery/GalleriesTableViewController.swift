@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// goal: preferredDisplayMode
+// goal: 
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -35,6 +35,7 @@ class GalleriesTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
     }
     
+    /// set preferredDisplayMode as primaryOverlay
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         if let splitViewController = splitViewController, splitViewController.preferredDisplayMode != .primaryOverlay {
