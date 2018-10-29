@@ -11,20 +11,42 @@ import UIKit
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
-        galleries[GalleriesTableVarNames.mainSection]!.append(GalleriesTableVarNames.untitledGallery)
+        galleries[GalleriesTableVarNames.mainSection]!.append(getAnEmptyImageGallery())
         tableView.reloadData()
+        
+        selectNewlyAddedGalleryRow()
     }
-    var galleries: [String: [String]] = [GalleriesTableVarNames.mainSection: [GalleriesTableVarNames.untitledGallery],
-                                         GalleriesTableVarNames.recentlyDeletedSection: []]
+    
+    private func selectNewlyAddedGalleryRow() {
+        let numberOfMainGalleries = tableView.numberOfRows(inSection: getGalleryIdx(from: GalleriesTableVarNames.mainSection))
+        let newlyAddedGalleryRowIndexPath = IndexPath(row: numberOfMainGalleries - 1, section: getGalleryIdx(from: GalleriesTableVarNames.mainSection))
+        selectRow(at: newlyAddedGalleryRowIndexPath)
+    }
+    
+    lazy var galleries: [String: [ImageGallery]] = [GalleriesTableVarNames.mainSection: [getAnEmptyImageGallery()],
+                                                    GalleriesTableVarNames.recentlyDeletedSection: []]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        selectFirstRowOnLoad()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
     }
     
+    private func selectFirstRowOnLoad() {
+        selectRow(at: IndexPath(row: 0, section: 0))
+    }
     
+    private func selectRow(at indexPath: IndexPath) {
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+        tableView(tableView, didSelectRowAt: indexPath)
+    }
+    
+    private func getAnEmptyImageGallery() -> ImageGallery {
+        return ImageGallery(name: "Untitled Gallery", images: [])
+    }
 
     // MARK: - Table view data source
 
@@ -38,7 +60,7 @@ class GalleriesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "galleryRow", for: indexPath)
-        cell.textLabel?.text = galleries[getGalleryTitle(from: indexPath.section)]![indexPath.row]
+        cell.textLabel?.text = galleries[getGalleryTitle(from: indexPath.section)]![indexPath.row].name
         return cell
     }
     
@@ -100,10 +122,7 @@ class GalleriesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedRow = tableView.cellForRow(at: indexPath)
-        if getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.mainSection {
-            performSegue(withIdentifier: "showGallery", sender: selectedRow)
-        }
+        performSegue(withIdentifier: "showGallery", sender: indexPath)
     }
     
     /*
@@ -125,10 +144,20 @@ class GalleriesTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if let selectedRow = sender as? UITableViewCell {
-            print(selectedRow.textLabel?.text)
+        if let indexPath = sender as? IndexPath {
+            if let destinationNavigationVC = segue.destination as? UINavigationController {
+                let imageGalleryCollectionVC = destinationNavigationVC.topViewController as! ImageGalleryCollectionViewController
+                imageGalleryCollectionVC.imageGallery = galleries[GalleriesTableVarNames.mainSection]![indexPath.row]
+            }
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if let indexPath = sender as? IndexPath {
+            return getGalleryTitle(from: indexPath.section) == GalleriesTableVarNames.mainSection
+        } else {
+            assertionFailure("sender as? IndexPath casting failed.")
+            return false
         }
     }
 

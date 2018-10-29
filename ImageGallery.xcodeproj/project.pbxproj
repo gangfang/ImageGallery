@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A42A2A072186C5AC00FA0D82 /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42A2A062186C5AC00FA0D82 /* ImageGallery.swift */; };
 		A43D0DAE2182B3B1003FB3A5 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43D0DAD2182B3B1003FB3A5 /* SingleImageViewController.swift */; };
 		A43D0DB02184A3FA003FB3A5 /* GalleriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43D0DAF2184A3FA003FB3A5 /* GalleriesTableViewController.swift */; };
 		A4A57F2E217893F8000188E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4A57F2D217893F8000188E0 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A42A2A062186C5AC00FA0D82 /* ImageGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
 		A43D0DAD2182B3B1003FB3A5 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		A43D0DAF2184A3FA003FB3A5 /* GalleriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleriesTableViewController.swift; sourceTree = "<group>"; };
 		A4A57F2D217893F8000188E0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			children = (
 				A4FC0C072176DBC500191C1D /* notes.txt */,
 				A4A57F2D217893F8000188E0 /* Main.storyboard */,
+				A42A2A062186C5AC00FA0D82 /* ImageGallery.swift */,
 				A43D0DAF2184A3FA003FB3A5 /* GalleriesTableViewController.swift */,
 				A4FC0C032175E34600191C1D /* ImageGalleryCollectionViewController.swift */,
 				A43D0DAD2182B3B1003FB3A5 /* SingleImageViewController.swift */,
@@ -162,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A42A2A072186C5AC00FA0D82 /* ImageGallery.swift in Sources */,
 				A4FC0C062175E3D400191C1D /* ImageCollectionViewCell.swift in Sources */,
 				A4FC0BF12175E2BE00191C1D /* AppDelegate.swift in Sources */,
 				A4FC0C0A21786E0300191C1D /* Utilities.swift in Sources */,
