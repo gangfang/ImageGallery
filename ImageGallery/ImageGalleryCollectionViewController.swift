@@ -11,7 +11,7 @@ import UIKit
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDragDelegate,
                                             UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout {
     var images = [UIImage]()
-    var imageARAndURLs = [[String: Any]]()   // AR is short for Aspect Ratio
+    var imageGallery = [[String: Any]]()
     var baseImageWidth: CGFloat = 250
     var imageWidth: CGFloat = 250
     var flowLayout: UICollectionViewFlowLayout? {
@@ -52,12 +52,12 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     // MARK: UICollectionViewDataSource
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageARAndURLs.count
+        return imageGallery.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath)
         if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.imageView.image = (imageARAndURLs[indexPath.item]["image"] as! UIImage)
+            imageCell.imageView.image = (imageGallery[indexPath.item]["image"] as! UIImage)
             addTapGestureFor(imageCell)
         }
         return cell
@@ -71,7 +71,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         performSegue(withIdentifier: "showBigImage", sender: recognizer.view)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let imageHeight: CGFloat = (imageARAndURLs[indexPath.item]["aspectRatio"] as! CGFloat) * imageWidth
+        let imageHeight: CGFloat = (imageGallery[indexPath.item]["aspectRatio"] as! CGFloat) * imageWidth
         return CGSize(width: imageWidth, height: imageHeight)
     }
     
@@ -152,8 +152,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                       with coordinator: UICollectionViewDropCoordinator)
     {
         collectionView.performBatchUpdates({
-        let imageARAndURL = imageARAndURLs.remove(at: sourceIndexPath.item)
-        imageARAndURLs.insert(imageARAndURL, at: min(destinationIndexPath.item, imageARAndURLs.count))
+        let imageARAndURL = imageGallery.remove(at: sourceIndexPath.item)
+        imageGallery.insert(imageARAndURL, at: min(destinationIndexPath.item, imageGallery.count))
         collectionView.deleteItems(at: [sourceIndexPath])
         collectionView.insertItems(at: [destinationIndexPath])
         })
@@ -205,7 +205,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                             imageARAndURL["aspectRatio"] = CGFloat(1)
                         }
                         placeHolderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
-                            self.imageARAndURLs.insert(imageARAndURL, at: insertionIndexPath.item)
+                            self.imageGallery.insert(imageARAndURL, at: insertionIndexPath.item)
                         })
                     }
                 }
