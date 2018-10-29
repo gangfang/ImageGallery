@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GalleriesTableViewController: UITableViewController {
+class GalleriesTableViewController: UITableViewController, UISplitViewControllerDelegate {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
         galleries[GalleriesTableVarNames.mainSection]!.append(getAnEmptyImageGallery())
@@ -26,6 +26,14 @@ class GalleriesTableViewController: UITableViewController {
     lazy var galleries: [String: [ImageGallery]] = [GalleriesTableVarNames.mainSection: [getAnEmptyImageGallery()],
                                                     GalleriesTableVarNames.recentlyDeletedSection: []]
 
+    
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return true
+    }
+    
+    override func awakeFromNib() {
+        splitViewController?.delegate = self
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
