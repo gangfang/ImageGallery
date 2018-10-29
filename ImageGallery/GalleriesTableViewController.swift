@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// goal: resign first responder and save name
 class GalleriesTableViewController: UITableViewController {
 
     @IBAction func addGallery(_ sender: UIBarButtonItem) {
@@ -68,7 +68,9 @@ class GalleriesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "galleryRow", for: indexPath)
-        cell.textLabel?.text = galleries[getGalleryTitle(from: indexPath.section)]![indexPath.row].name
+        if let galleryRowCell = cell as? GalleriesTableViewCell {
+            galleryRowCell.textField.text = galleries[getGalleryTitle(from: indexPath.section)]![indexPath.row].name
+        }
         return cell
     }
     
