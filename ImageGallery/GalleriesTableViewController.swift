@@ -144,10 +144,10 @@ class GalleriesTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let indexPath = sender as? IndexPath {
-            if let destinationNavigationVC = segue.destination as? UINavigationController {
+        if let indexPath = sender as? IndexPath, let destinationNavigationVC = segue.destination as? UINavigationController {
+            if let mainGalleries = galleries[GalleriesTableVarNames.mainSection], !mainGalleries.isEmpty {
                 let imageGalleryCollectionVC = destinationNavigationVC.topViewController as! ImageGalleryCollectionViewController
-                imageGalleryCollectionVC.imageGallery = galleries[GalleriesTableVarNames.mainSection]![indexPath.row]
+                imageGalleryCollectionVC.imageGallery = mainGalleries[indexPath.row]
             }
         }
     }
